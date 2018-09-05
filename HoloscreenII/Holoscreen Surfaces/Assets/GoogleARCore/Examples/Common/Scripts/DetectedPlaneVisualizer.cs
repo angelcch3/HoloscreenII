@@ -208,11 +208,10 @@ namespace GoogleARCore.Examples.Common
             m_Mesh.SetIndices(m_MeshIndices.ToArray(), MeshTopology.Triangles, 0);
             m_Mesh.SetColors(m_MeshColors);
 
-			// I write this.
-			MeshCollider mc = GetComponent<MeshCollider> ();
-			if (mc != null) {
-				mc.sharedMesh = m_Mesh;
-			}
+            MeshCollider mc = GetComponent<MeshCollider>();
+            if (mc != null) {
+              mc.sharedMesh = m_Mesh;
+            }
         }
 
         private bool _AreVerticesListsEqual(List<Vector3> firstList, List<Vector3> secondList)

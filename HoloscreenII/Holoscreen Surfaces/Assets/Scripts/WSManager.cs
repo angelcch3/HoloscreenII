@@ -34,7 +34,7 @@ public class WSManager : MonoBehaviour, WebSocketUnityDelegate {
 		websocketInputField.onEndEdit.AddListener(delegate { updateWebSocketServerInfo();});
 		*/
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		//Debug.Log ("aaaaa");
@@ -48,14 +48,14 @@ public class WSManager : MonoBehaviour, WebSocketUnityDelegate {
 	public void OnEnable()
 	{
 		// Create web socket
-		Debug.Log ("Connecting");
+		Debug.Log ("Connecting" + websocketServer);
 		string url = "ws://"+websocketServer + ":" + websocketPort;
 		webSocket = new WebSocketUnity(url, this);
 
 		// Open the connection
 		webSocket.Open();
 	}
-		
+
 	private void updateWebSocketServerInfo(){
 		websocketServer = websocketInputField.text;
 		webSocket.Close ();
@@ -68,16 +68,16 @@ public class WSManager : MonoBehaviour, WebSocketUnityDelegate {
 	// You will need them to manage websocket events
 	public string getHandInfoLeft(){
 		//Debug.Log("Hand_l" );
-		return handinfo_l;	
+		return handinfo_l;
 	}
 	public string getHandInfoRight(){
 		//Debug.Log("Hand_r" );
-		return handinfo_r;	
+		return handinfo_r;
 	}
 
 	public string getGestureInfoRight(){
 		//Debug.Log("gestureinfo" );
-		return gestureinfo;	
+		return gestureinfo;
 	}
 
 	// This event happens when the websocket is opened
@@ -110,10 +110,10 @@ public class WSManager : MonoBehaviour, WebSocketUnityDelegate {
 			if (hand_info [0].Contains ("hand_type")) {
 				//Debug.Log (hand_info [i]);
 				if (hand_info [1].Contains ("left"))
-					handinfo_l_temp = hand_list [hand_i]; 
+					handinfo_l_temp = hand_list [hand_i];
 				else
 					handinfo_r_temp = hand_list [hand_i];
-			}				
+			}
 		}
 		handinfo_l = handinfo_l_temp;
 		handinfo_r = handinfo_r_temp;
@@ -135,7 +135,7 @@ public class WSManager : MonoBehaviour, WebSocketUnityDelegate {
 
 	// This event happens when the websocket did receive data
 	public void OnWebSocketUnityReceiveData(byte[] data)
-	{	
+	{
 		int testInt1 = System.BitConverter.ToInt32(data,0);
 		int testInt2 = System.BitConverter.ToInt32(data,4);;
 
