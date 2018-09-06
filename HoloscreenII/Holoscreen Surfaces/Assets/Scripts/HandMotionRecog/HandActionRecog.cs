@@ -167,7 +167,7 @@ public class HandActionRecog : MonoBehaviour {
 		if (handMotionList.ContainsKey (motionName)) {
 			HandMotion hm = handMotionList [motionName];
 
-			Debug.Log ("Action:Prepare Match");
+			// Debug.Log ("Action:Prepare Match");
 			return hm.Match (leftHandList);
 		}
 		return false;

@@ -74,6 +74,10 @@ public class PaintManager : MonoBehaviour {
 		if (paint_mode) {
 			//if paint mode and not erasing
 			if (!eraser_mode) {
+                if (gestureManager.bufferedGesture() != "pinch" && is_painting) {
+                    Debug.Log("Paint but not, current gesture:" + gestureManager.bufferedGesture());
+                }
+
 				if (gestureManager.bufferedGesture () == "pinch") {
 					if (!is_painting) {
 					
@@ -95,7 +99,7 @@ public class PaintManager : MonoBehaviour {
 
 						//add here
 						if (new_ink.positionCount > 3) {
-							if (Vector3.Distance (newPoint, new_ink.GetPosition (new_ink.positionCount - 2)) > 0.003f) {
+							if (Vector3.Distance (newPoint, new_ink.GetPosition (new_ink.positionCount - 1)) > 0.0015f) {
 								new_ink.positionCount++;
 								new_ink.SetPosition (new_ink.positionCount - 1, newPoint);
 							}
@@ -103,7 +107,6 @@ public class PaintManager : MonoBehaviour {
 							new_ink.positionCount++;
 							new_ink.SetPosition (new_ink.positionCount - 1, newPoint);
 						}
-						
 					}
 				} else if (gestureManager.bufferedGesture () == "palm") {
 
@@ -121,7 +124,7 @@ public class PaintManager : MonoBehaviour {
 		}
 
 
-		Debug.Log ("eraser is erasing? " + eraser_mode);
+		// Debug.Log ("eraser is erasing? " + eraser_mode);
 
 		if (eraser_mode) {
 			Debug.Log ("eraser erasing " + eraser_mode);
@@ -166,8 +169,8 @@ public class PaintManager : MonoBehaviour {
 		//new_ink.GetComponent<Renderer> ().material = Instantiate (new_ink.GetComponent<Renderer> ().material) as Material;
 		new_ink.gameObject.transform.SetParent (ink_group.gameObject.transform);
 		new_ink.positionCount = 0;
-		new_ink.numCornerVertices = 20;
-		new_ink.numCapVertices = 20;
+		new_ink.numCornerVertices = 15;
+		new_ink.numCapVertices = 10;
 
 		inkList.Add (new_ink);
 

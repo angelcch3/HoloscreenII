@@ -51,8 +51,11 @@ public class GrabCollider : MonoBehaviour {
 			originMat = rdr.material;
 		}
 		if (newMaterial != null) {
-			newMaterial.mainTexture = originMat.mainTexture;
+            if (originMat.mainTexture) {
+                newMaterial.mainTexture = originMat.mainTexture;
+            }
 			newMaterial.color = originMat.color;
+            newMaterial.SetColor("_OutlineColor", Color.blue);
 		}
 
 		State = GRABCOLLIDER_STATE.TO_ENTER;
@@ -64,6 +67,8 @@ public class GrabCollider : MonoBehaviour {
 		// Don't want palm
 		if (other.name == "palm")
 			return;
+        if (other.transform.parent == null || other.transform.parent.parent == null)
+            return;
 		
 		if (other.transform.parent.parent.name == "Hand_l") {
 			LeftHandFingerIn++;
@@ -93,6 +98,9 @@ public class GrabCollider : MonoBehaviour {
 	void OnTriggerExit (Collider other) {
 		if (other.name == "palm")
 			return;
+
+        if (other.transform.parent == null || other.transform.parent.parent == null)
+            return;
 		
 		if (other.transform.parent.parent.name == "Hand_l") {
 			LeftHandFingerIn--;
@@ -100,6 +108,7 @@ public class GrabCollider : MonoBehaviour {
 		if (State == GRABCOLLIDER_STATE.TO_EXIT && LeftHandFingerIn < CHandFingerThreshold) {
 			HandManager hm = GameObject.Find ("Hand_l").GetComponent<HandManager> ();
 			if (hm != null && !hm.IsGrabbing) {
+                Debug.Log("Grab:Release by exit and not grabbing");
 				BindObject.GetComponent<Renderer> ().material = originMat;
 				ReleaseSelf ();
 				SwitchToReadyEnter ();

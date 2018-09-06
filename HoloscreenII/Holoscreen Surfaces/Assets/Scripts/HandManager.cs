@@ -115,8 +115,13 @@ public class HandManager : MonoBehaviour {
 			GameObject interact_obj = getHandObject ();
 			if (interact_obj != null) {
 				cleanGuidance ();
-				//if hand gesture is grabbing
-				if (gestureManager.bufferedGesture () == "pinch" || gestureManager.bufferedGesture () == "fist") {
+                //if hand gesture is grabbing
+                string cur_gesture = gestureManager.bufferedGesture();
+                if (is_grabbing) {
+                        float index_thumb_dis = Vector3.Distance(pIndexFingerPos, pThumbFingerPos);
+                        Debug.Log("Grab Current Distance:" + index_thumb_dis);
+                    }
+				if (cur_gesture == "pinch" || cur_gesture == "fist") {
 					//grab objbect if hand is not grabbing
 					if (!is_grabbing) {
 						grabObject (interact_obj);
@@ -128,7 +133,8 @@ public class HandManager : MonoBehaviour {
 				//if hand gesture is not grabbing
 				} else {
 					//but hand is grabbing
-					if (is_grabbing) {
+					if (is_grabbing && cur_gesture == "palm") {
+                        Debug.Log("Grab:Release Grab, current gesture:" + gestureManager.bufferedGesture());
 						//then tell the object to release itself, Here support two version of interaction objects.
 						InteractionScriptObject iso = interact_obj.GetComponent<InteractionScriptObject> ();
 						if (iso != null && iso.isActiveAndEnabled) {
