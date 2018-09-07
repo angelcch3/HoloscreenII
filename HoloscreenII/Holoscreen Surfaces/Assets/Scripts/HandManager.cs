@@ -129,11 +129,13 @@ public class HandManager : MonoBehaviour {
 				//if hand gesture is not grabbing
 				} else {
 					//but hand is grabbing
-                    //Transform indextip = transform.Find("index").Find("bone3");
-                    //Transform thumbtip = transform.Find("thumb").Find("bone3");
-                    //float index_thumb_dis = Vector3.Distance(indextip.position, thumbtip.position);
+                    Transform indextip = transform.Find("index").Find("bone3");
+                    Transform thumbtip = transform.Find("thumb").Find("bone3");
+                    float index_thumb_dis = Vector3.Distance(indextip.position, thumbtip.position);
+                    if (is_grabbing)
+                        Debug.Log("Grab:" + index_thumb_dis);
                     
-					if (is_grabbing && cur_gesture == "palm") {
+					if (is_grabbing && (cur_gesture == "palm" || index_thumb_dis > 0.04f)) {
                         Debug.Log("Grab:Release Grab, current gesture:" + gestureManager.bufferedGesture());
 						//then tell the object to release itself, Here support two version of interaction objects.
 						InteractionScriptObject iso = interact_obj.GetComponent<InteractionScriptObject> ();
