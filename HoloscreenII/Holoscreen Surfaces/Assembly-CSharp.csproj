@@ -196,6 +196,7 @@
     <Compile Include="Assets\GoogleARCore\SDK\Scripts\XPSession.cs" />
     <Compile Include="Assets\GoogleARCore\SDK\Scripts\XPSessionStatus.cs" />
     <Compile Include="Assets\GoogleARCore\SDK\Scripts\XPTrackingState.cs" />
+    <Compile Include="Assets\MaterialChangeTest.cs" />
     <Compile Include="Assets\OpenCVForUnity\Examples\Advanced\ComicFilterExample\ComicFilterExample.cs" />
     <Compile Include="Assets\OpenCVForUnity\Examples\Advanced\GreenScreenExample\GreenScreenExample.cs" />
     <Compile Include="Assets\OpenCVForUnity\Examples\Advanced\HandPoseEstimationExample\ColorBlobDetector.cs" />

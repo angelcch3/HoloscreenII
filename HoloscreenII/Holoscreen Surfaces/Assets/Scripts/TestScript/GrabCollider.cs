@@ -50,13 +50,6 @@ public class GrabCollider : MonoBehaviour {
 		if (rdr != null) {
 			originMat = rdr.material;
 		}
-		if (newMaterial != null) {
-            if (originMat.mainTexture) {
-                newMaterial.mainTexture = originMat.mainTexture;
-            }
-			newMaterial.color = originMat.color;
-            newMaterial.SetColor("_OutlineColor", Color.blue);
-		}
 
 		State = GRABCOLLIDER_STATE.TO_ENTER;
 		LeftHandFingerIn = 0;
@@ -84,8 +77,8 @@ public class GrabCollider : MonoBehaviour {
 				// Try get hand manager
 				HandManager hm = other.transform.parent.parent.GetComponent<HandManager>();
 				if (hm != null && !hm.checkHandBusy()) {
-					// High light it
-					BindObject.GetComponent<Renderer>().material = newMaterial;
+                    // High light it
+                    HighLightSelf();
 					hm.setHandObject (BindObject.gameObject);
 				}
 			}
@@ -145,4 +138,13 @@ public class GrabCollider : MonoBehaviour {
 		State = GRABCOLLIDER_STATE.TO_ENTER;
 		transform.localScale = transform.localScale / ExpandScale;
 	}
+
+    private void HighLightSelf() {
+        if (newMaterial != null) {
+            newMaterial.mainTexture = originMat.mainTexture;
+            newMaterial.color = originMat.color;
+            newMaterial.SetColor("_OutlineColor", Color.blue);
+            BindObject.GetComponent<Renderer>().material = newMaterial;
+        }
+    }
 }
