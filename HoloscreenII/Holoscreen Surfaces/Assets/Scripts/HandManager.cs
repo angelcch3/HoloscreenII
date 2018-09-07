@@ -60,8 +60,8 @@ public class HandManager : MonoBehaviour {
 		paintManager = this.GetComponent<PaintManager> ();
 		palm = this.transform.GetChild (5).gameObject;
 		grabHolder = this.transform.GetChild (5).GetChild (0).gameObject;
-		thumbFinger = this.transform.GetChild (0).GetChild (0).gameObject;
-		indexFinger = this.transform.GetChild (1).GetChild (0).gameObject;
+		thumbFinger = this.transform.GetChild (0).GetChild (2).gameObject;
+		indexFinger = this.transform.GetChild (1).GetChild (2).gameObject;
 
 		indexFingerPos = new Vector3[10];
 		thumbFingerPos = new Vector3[10];
@@ -117,10 +117,6 @@ public class HandManager : MonoBehaviour {
 				cleanGuidance ();
                 //if hand gesture is grabbing
                 string cur_gesture = gestureManager.bufferedGesture();
-                if (is_grabbing) {
-                        float index_thumb_dis = Vector3.Distance(pIndexFingerPos, pThumbFingerPos);
-                        Debug.Log("Grab Current Distance:" + index_thumb_dis);
-                    }
 				if (cur_gesture == "pinch" || cur_gesture == "fist") {
 					//grab objbect if hand is not grabbing
 					if (!is_grabbing) {
@@ -133,6 +129,10 @@ public class HandManager : MonoBehaviour {
 				//if hand gesture is not grabbing
 				} else {
 					//but hand is grabbing
+                    //Transform indextip = transform.Find("index").Find("bone3");
+                    //Transform thumbtip = transform.Find("thumb").Find("bone3");
+                    //float index_thumb_dis = Vector3.Distance(indextip.position, thumbtip.position);
+                    
 					if (is_grabbing && cur_gesture == "palm") {
                         Debug.Log("Grab:Release Grab, current gesture:" + gestureManager.bufferedGesture());
 						//then tell the object to release itself, Here support two version of interaction objects.
