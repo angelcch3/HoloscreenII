@@ -132,8 +132,6 @@ public class HandManager : MonoBehaviour {
                     Transform indextip = transform.Find("index").Find("bone3");
                     Transform thumbtip = transform.Find("thumb").Find("bone3");
                     float index_thumb_dis = Vector3.Distance(indextip.position, thumbtip.position);
-                    if (is_grabbing)
-                        Debug.Log("Grab:" + index_thumb_dis);
                     
 					if (is_grabbing && (cur_gesture == "palm" || index_thumb_dis > 0.04f)) {
                         Debug.Log("Grab:Release Grab, current gesture:" + gestureManager.bufferedGesture());
@@ -364,7 +362,7 @@ public class HandManager : MonoBehaviour {
 		//obj.GetComponent<Rigidbody> ().velocity = palm.GetComponent<Rigidbody> ().velocity * 5.0f;
 
 
-		Vector3 v = calculateVelocity (indexFingerPos);
+		Vector3 v = calculateVelocity ();
 		obj.GetComponent<Rigidbody> ().velocity = new Vector3 (v[0], v[1] / 1.5f,v[2]);
 
 		/*new feature: push*/
@@ -407,11 +405,17 @@ public class HandManager : MonoBehaviour {
 		pIndexFingerPos = indexFinger.transform.position;
 	}
 
-	private Vector3 calculateVelocity(Vector3[] v){
-		Vector3 fv = Vector3.zero;
-		for (int i = 0; i < v.Length; i++) {
-			fv += v [i];
-		}
+	private Vector3 calculateVelocity(){
+        // Calculate Speed by the middle point of index and thumb.
+        Vector3 fv = Vector3.zero;
+        // Use the shorter array as the total length
+        int l = indexFingerPos.Length;
+        if (thumbFingerPos.Length < l)
+            l = thumbFingerPos.Length;
+
+        for (int i = 0; i < l; ++i)
+            fv += (indexFingerPos[i] + thumbFingerPos[i]) / 2;
+		
 		return (fv* _handThrowingPowerMultiplier);
 	}
 

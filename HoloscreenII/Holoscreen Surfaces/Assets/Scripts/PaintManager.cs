@@ -74,11 +74,7 @@ public class PaintManager : MonoBehaviour {
 		if (paint_mode) {
 			//if paint mode and not erasing
 			if (!eraser_mode) {
-                if (gestureManager.bufferedGesture() != "pinch" && is_painting) {
-                    Debug.Log("Paint but not, current gesture:" + gestureManager.bufferedGesture());
-                }
-
-				if (gestureManager.bufferedGesture () == "pinch") {
+				if (gestureManager.bufferedGesture () == "pinch" || gestureManager.bufferedGesture() == "paint") {
 					if (!is_painting) {
 					
 						this.createNewInk ();
